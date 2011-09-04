@@ -1,0 +1,114 @@
+<!DOCTYPE html>  <html> <head>   <title>fileset.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               fileset.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p><code>helpers</code> expose a basic wrapper around node-glob by isaacs and 
+findit by substack. Enable multiple pattern matching, and include
+exlude ability.</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>External dependency</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">glob            = </span><span class="nx">require</span> <span class="s1">&#39;glob&#39;</span>
+<span class="p">{</span><span class="nx">EventEmitter</span><span class="p">}</span>  <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;events&#39;</span>
+<span class="nv">path            = </span><span class="nx">require</span> <span class="s1">&#39;path&#39;</span>
+<span class="nv">fs              = </span><span class="nx">require</span> <span class="s1">&#39;fs&#39;</span>
+<span class="nv">findit          = </span><span class="nx">require</span> <span class="s1">&#39;findit&#39;</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>regex used to split include and excludes pattern</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">rsplit = </span><span class="sr">/\s|,\s/</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <h2>fileset</h2>
+
+<p>a wrapper around node-glob by isaacs that enables
+multiple pattern matching and exlude mechanism</p>
+
+<p>Can be used with callback or emitter style.</p>
+
+<ul>
+<li><strong>include</strong>: list of glob patterns <code>foo/**/*.js *.md src/lib/**/*</code></li>
+<li><strong>exclude</strong>: list of glob patterns to filter include results <code>foo/**/*.js *.md</code></li>
+<li><strong>callback</strong>: function that gets called with an error if something
+wrong happend, otherwise null with an array of results</li>
+</ul>
+
+<p>The callback is optional since the fileset method return an instance
+of EventEmitter which emit different events you might use: </p>
+
+<ul>
+<li><em>match</em>: triggered on findit.file and each glob returned by
+node-glob, triggerd multiple times</li>
+<li><em>includes</em>: array of includes files, triggered once</li>
+<li><em>excludes</em>: array of exclude files, triggered once</li>
+<li><em>end</em>:  array of include files, filter by exluded files, triggered
+once</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">module.exports = </span><span class="nf">(include, exclude, callback) -&gt;</span>
+  <span class="nv">em = </span><span class="k">new</span> <span class="nx">EventEmitter</span>
+  <span class="nv">match = </span>
+    <span class="nv">includes: </span><span class="p">[]</span>
+    <span class="nv">excludes: </span><span class="p">[]</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>handle no exclude case</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">if</span> <span class="o">!</span><span class="nx">callback</span> <span class="o">and</span> <span class="k">typeof</span> <span class="nx">exclude</span> <span class="o">is</span> <span class="s1">&#39;function&#39;</span>
+    <span class="nv">callback = </span><span class="nx">exclude</span>
+    <span class="nv">exclude = </span><span class="s2">&quot;&quot;</span>
+
+  <span class="k">if</span> <span class="o">!</span><span class="nx">callback</span> <span class="o">and</span> <span class="o">!</span><span class="nx">exclude</span>
+    <span class="nv">exclude = </span><span class="s2">&quot;&quot;</span>
+
+  <span class="nv">includes = </span><span class="nx">include</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="nx">rsplit</span><span class="p">).</span><span class="nx">filter</span><span class="p">(</span><span class="nf">(it) -&gt;</span> <span class="nx">it</span><span class="p">)</span> <span class="o">or</span> <span class="p">[]</span>
+  <span class="nv">excludes = </span><span class="nx">exclude</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="nx">rsplit</span><span class="p">).</span><span class="nx">filter</span><span class="p">(</span><span class="nf">(it) -&gt;</span> <span class="nx">it</span><span class="p">)</span> <span class="o">or</span> <span class="p">[]</span>
+  <span class="nv">exludesLength = </span><span class="nx">excludes</span><span class="p">.</span><span class="nx">length</span>
+  <span class="nv">includesLength = </span><span class="nx">includes</span><span class="p">.</span><span class="nx">length</span>
+
+  <span class="nx">globs</span> <span class="nx">includes</span><span class="p">,</span> <span class="nx">em</span><span class="p">,</span> <span class="nf">(err, results) -&gt;</span>
+    <span class="k">if</span> <span class="nx">err</span>
+      <span class="nx">callback</span> <span class="nx">err</span> <span class="k">if</span> <span class="nx">callback</span>
+      <span class="k">return</span> <span class="nx">em</span><span class="p">.</span><span class="nx">emit</span> <span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">err</span>
+
+    <span class="nv">match.includes = </span><span class="nx">results</span>
+    <span class="nx">em</span><span class="p">.</span><span class="nx">emit</span> <span class="s1">&#39;include&#39;</span><span class="p">,</span> <span class="nx">results</span>
+
+    <span class="nx">unless</span> <span class="nx">excludes</span><span class="p">.</span><span class="nx">length</span>
+      <span class="nx">callback</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">results</span> <span class="k">if</span> <span class="nx">callback</span>
+      <span class="k">return</span> <span class="nx">em</span><span class="p">.</span><span class="nx">emit</span> <span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="nx">results</span>
+
+    <span class="nx">globs</span> <span class="nx">excludes</span><span class="p">,</span> <span class="nx">em</span><span class="p">,</span> <span class="nf">(err, results) -&gt;</span>
+      <span class="k">if</span> <span class="nx">err</span>
+        <span class="nx">callback</span> <span class="nx">err</span> <span class="k">if</span> <span class="nx">callback</span>
+        <span class="k">return</span> <span class="nx">em</span><span class="p">.</span><span class="nx">emit</span> <span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">err</span>
+
+      <span class="nv">match.excludes = </span><span class="nx">results</span>
+      <span class="nx">em</span><span class="p">.</span><span class="nx">emit</span> <span class="s1">&#39;exclude&#39;</span><span class="p">,</span> <span class="nx">results</span>
+
+      <span class="nv">match.includes = </span><span class="nx">match</span><span class="p">.</span><span class="nx">includes</span><span class="p">.</span><span class="nx">filter</span> <span class="nf">(it) -&gt;</span>
+        <span class="nv">dotbegin = </span><span class="sr">/^\./</span><span class="p">.</span><span class="nx">test</span> <span class="nx">it</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">).</span><span class="nx">reverse</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nv">excluded = </span><span class="o">!!~</span><span class="nx">match</span><span class="p">.</span><span class="nx">excludes</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">it</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">!</span><span class="p">(</span><span class="nx">excluded</span><span class="p">)</span>
+
+      <span class="nx">em</span><span class="p">.</span><span class="nx">emit</span> <span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="nx">match</span><span class="p">.</span><span class="nx">includes</span>
+      <span class="nx">callback</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">match</span><span class="p">.</span><span class="nx">includes</span> <span class="k">if</span> <span class="nx">callback</span>
+
+  <span class="nx">em</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <h3>globs</h3>
+
+<p>higher level module-scopped function. </p>
+
+<p>Takes an array of patterns which may match a glob pattern, a file or
+directory. In the case of glob pattern (with a <code>*</code>), node-glob is
+used, otherwise findit is used.</p>
+
+<p>The callback get a single array of results.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">globs = </span><span class="nf">(patterns, em, callback) -&gt;</span>
+  <span class="k">return</span> <span class="nx">callback</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;patterns is empty&#39;</span><span class="p">)</span> <span class="nx">unless</span> <span class="nx">patterns</span><span class="p">.</span><span class="nx">length</span>
+
+  <span class="nv">matches = </span><span class="p">[]</span>
+  <span class="nv">patterns = </span><span class="nx">patterns</span><span class="p">.</span><span class="nx">filter</span> <span class="nf">(it) -&gt;</span> <span class="nx">it</span>
+  <span class="nv">remaining = </span><span class="nx">patterns</span><span class="p">.</span><span class="nx">length</span>
+  <span class="k">for</span> <span class="nx">pattern</span><span class="p">,</span> <span class="nx">index</span> <span class="k">in</span> <span class="nx">patterns</span> <span class="k">then</span> <span class="nx">do</span> <span class="nf">(pattern, index) -&gt;</span>
+    <span class="nv">isGlob = </span><span class="sr">/\*/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">pattern</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nx">isGlob</span>
+      <span class="k">return</span> <span class="nx">glob</span> <span class="nx">pattern</span><span class="p">,</span> <span class="nf">(err, results) -&gt;</span>
+        <span class="k">return</span> <span class="nx">callback</span> <span class="nx">err</span> <span class="k">if</span> <span class="nx">err</span>
+        <span class="nv">matches = </span><span class="nx">matches</span><span class="p">.</span><span class="nx">concat</span> <span class="nx">results</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nf">(it) -&gt;</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span> <span class="nx">it</span><span class="p">)</span>
+        <span class="nx">callback</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">matches</span> <span class="k">if</span> <span class="o">--</span><span class="nx">remaining</span> <span class="o">is</span> <span class="mi">0</span>
+
+    <span class="nv">files = </span><span class="p">[]</span>
+    <span class="nv">errors = </span><span class="p">[]</span>
+    <span class="nv">absolute = </span><span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">pattern</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>check if we're hitting an existing file</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">fs</span><span class="p">.</span><span class="nx">stat</span> <span class="nx">absolute</span><span class="p">,</span> <span class="nf">(err, stat) -&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>be sure to decrement <code>remaining</code> and invoke callback on err
+but without error state, just give back array <code>matches</code></p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">if</span> <span class="nx">err</span>
+        <span class="nx">callback</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">matches</span> <span class="k">if</span> <span class="o">--</span><span class="nx">remaining</span> <span class="o">is</span> <span class="mi">0</span>
+        <span class="k">return</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>when hitting a file, append its path to matches, and prevent</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="k">if</span> <span class="nx">stat</span> <span class="o">and</span> <span class="nx">stat</span><span class="p">.</span><span class="nx">isFile</span><span class="p">()</span>
+        <span class="nv">matches = </span><span class="nx">matches</span><span class="p">.</span><span class="nx">concat</span> <span class="p">[</span><span class="nx">absolute</span><span class="p">]</span>
+        <span class="nx">callback</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">matches</span> <span class="k">if</span> <span class="o">--</span><span class="nx">remaining</span> <span class="o">is</span> <span class="mi">0</span>
+        <span class="k">return</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>finaly, we can findit a valid and existing directory</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">findit</span><span class="p">(</span><span class="nx">absolute</span><span class="p">)</span>
+        <span class="p">.</span><span class="kc">on</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="nf">(file) -&gt;</span> <span class="nx">em</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="nx">file</span><span class="p">);</span> <span class="nx">files</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">file</span><span class="p">))</span>
+        <span class="p">.</span><span class="kc">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nf">(err) -&gt;</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">err</span><span class="p">))</span>
+        <span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="nf">() -&gt;</span>
+          <span class="k">return</span> <span class="nx">callback</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;findit returned with errors&#39;</span><span class="p">),</span> <span class="nx">errors</span> <span class="k">if</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">length</span>
+          <span class="nv">matches = </span><span class="nx">matches</span><span class="p">.</span><span class="nx">concat</span> <span class="nx">files</span>
+          <span class="nx">callback</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">matches</span> <span class="k">if</span> <span class="o">--</span><span class="nx">remaining</span> <span class="o">is</span> <span class="mi">0</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
