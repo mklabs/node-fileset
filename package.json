@@ -1,27 +1,22 @@
 {
   "author": "Mickael Daniel",
   "name": "fileset",
-  "description": "Wrapper around glob and findit to allow multiple pattern matching and include-exclude",
+  "description": "Wrapper around miniglob to allow multiple pattern matching and include-exclude",
   "version": "0.0.1",
   "homepage": "https://github.com/mklabs/node-fileset",
   "repository": {
     "type": "git",
     "url": "git://github.com/mklabs/node-fileset.git"
   },
-  "main": "./lib/fileset",
+  "main": "./lib/mini-fileset",
   "scripts": {
-    "test": "vows tests/*.js --spec"
+    "test": "node tests/test.js"
   },
   "engines": {
     "node": "> 0.4"
   },
   "dependencies": {
-    "glob": "2.0.x",
-    "findit": "0.1.x"
-  },
-  "devDependencies": {
-    "vows": "0.5.x",
-    "coffee-script": "1.1.2",
-    "colors": "0.5.0"
+    "findit": "~0.1.2",
+    "minimatch": "~0.1.3"
   }
 }
