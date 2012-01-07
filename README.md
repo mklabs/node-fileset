@@ -16,7 +16,7 @@ Can be used with callback or emitter style.
 * **exclude**: *optional* list of glob patterns to filter include results `foo/**/*.js *.md`
 * **callback**: *optional* function that gets called with an error if something wrong happend, otherwise null with an array of results
 
-The callback is optional since the fileset method return an instance of EventEmitter which emit different events you might use: 
+The callback is optional since the fileset method return an instance of EventEmitter which emit different events you might use:
 
 * *match*: triggered on findit.file and each glob returned by node-glob, triggerd multiple times
 * *includes*: array of includes files, triggered once
@@ -42,8 +42,8 @@ The callback is optional since the fileset method return an instance of EventEmi
 
     fileset('**.coffee README.md *.json Cakefile **.js', 'node_modules')
       .on('match', console.log.bind(console, 'error'))
-      .on('includes', console.log.bind(console, 'includes'))
-      .on('excludes', console.log.bind(console, 'excludes'))
+      .on('include', console.log.bind(console, 'includes'))
+      .on('exclude', console.log.bind(console, 'excludes'))
       .on('end', console.log.bind(console, 'end'));
 
 Check out the [tests](https://github.com/mklabs/node-fileset/tree/master/tests) for more examples.
