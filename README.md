@@ -1,14 +1,16 @@
 # node-fileset
 
-Expose a basic wrapper around [node-glob](https://github.com/isaacs/node-glob) by isaacs and [findit](https://github.com/substack/node-findit) by substack. Enable multiple pattern matching, and include exlude ability.
+Exposes a basic wrapper on top of [miniglob](https://github.com/isaacs/miniglob) / [minimatch](https://github.com/isaacs/minimatch) combo both written by @isaacs. miniglob is now used instead of node-glob to replace the C++ bindings and make it usable in node 0.6.x and windows platforms.
+
+[![Build Status](https://secure.travis-ci.org/isaacs/minimatch.png)](http://travis-ci.org/isaacs/minimatch)
+
+Enable multiples patterns matching, and include exlude ability. This is bascially just sugar API syntax where you can specify a list of includes and optionnal exclude patterns. It works by setting up the necessary miniglob "fileset" and filtering out the results using minimatch.
 
 ## install
 
     npm install fileset
 
 ## usage
-
-### fileset
 
 Can be used with callback or emitter style.
 
@@ -18,11 +20,10 @@ Can be used with callback or emitter style.
 
 The callback is optional since the fileset method return an instance of EventEmitter which emit different events you might use:
 
-* *match*: triggered on findit.file and each glob returned by node-glob, triggerd multiple times
-* *includes*: array of includes files, triggered once
-* *excludes*: array of exclude files, triggered once
-* *end*:  array of include files, filter by exluded files, triggered once
-
+* *match*: Every time a match is found, miniglob emits this event with the pattern.
+* *include*: Emitted each time an include match is found.
+* *exclude*: Emitted each time an an exclude match is found and filtered out from the fileset.
+* *end*:  Emitted when the matching is finished with all the matches found, optionnaly filterd by the exclude patterns.
 
 #### callback
 
@@ -46,15 +47,16 @@ The callback is optional since the fileset method return an instance of EventEmi
       .on('exclude', console.log.bind(console, 'excludes'))
       .on('end', console.log.bind(console, 'end'));
 
-Check out the [tests](https://github.com/mklabs/node-fileset/tree/master/tests) for more examples.
+fileset returns an instance of EventEmitter, with an `includes` property which is the array of Fileset objects (inheriting from `miniglob.Miniglob`) that were used during the mathing process, shoud you want to use them individually.
 
+Check out the [tests](https://github.com/mklabs/node-fileset/tree/master/tests) for more examples.
 
 ## tests
 
-just run `npm test` (make sure to install devDependencies too)
+just run `npm test`
 
 ## why
 
 mainly as a build tool with cake files, to provide me an easy way to get a list of files by either using glob or path patterns, optionnaly allowing exclude patterns to filter out the results.
 
-All the magic is happening in  [node-glob](https://github.com/isaacs/node-glob) and [findit](https://github.com/substack/node-findit)y, check them out !
+All the magic is happening in [miniglob](https://github.com/isaacs/miniglob) and [minimatch](https://github.com/isaacs/minimatch), check them out !
