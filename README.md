@@ -2,7 +2,7 @@
 
 Exposes a basic wrapper on top of [miniglob](https://github.com/isaacs/miniglob) / [minimatch](https://github.com/isaacs/minimatch) combo both written by @isaacs. miniglob is now used instead of node-glob to replace the C++ bindings and make it usable in node 0.6.x and windows platforms.
 
-[![Build Status](https://secure.travis-ci.org/isaacs/minimatch.png)](http://travis-ci.org/isaacs/minimatch)
+[![Build Status](https://secure.travis-ci.org/mklabs/node-fileset.png)](http://travis-ci.org/mklabs/node-fileset)
 
 Enable multiples patterns matching, and include exlude ability. This is bascially just sugar API syntax where you can specify a list of includes and optionnal exclude patterns. It works by setting up the necessary miniglob "fileset" and filtering out the results using minimatch.
 
