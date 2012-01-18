@@ -1,6 +1,6 @@
 # node-fileset
 
-Exposes a basic wrapper on top of [miniglob](https://github.com/isaacs/miniglob) / [minimatch](https://github.com/isaacs/minimatch) combo both written by @isaacs. miniglob is now used instead of node-glob to replace the C++ bindings and make it usable in node 0.6.x and windows platforms.
+Exposes a basic wrapper on top of [Glob](https://github.com/isaacs/node-glob) / [minimatch](https://github.com/isaacs/minimatch) combo both written by @isaacs. Glob now use javascript instead of C++ bindings and make it usable in node 0.6.x and windows platforms.
 
 [![Build Status](https://secure.travis-ci.org/mklabs/node-fileset.png)](http://travis-ci.org/mklabs/node-fileset)
 
@@ -59,4 +59,4 @@ just run `npm test`
 
 mainly as a build tool with cake files, to provide me an easy way to get a list of files by either using glob or path patterns, optionnaly allowing exclude patterns to filter out the results.
 
-All the magic is happening in [miniglob](https://github.com/isaacs/miniglob) and [minimatch](https://github.com/isaacs/minimatch), check them out !
+All the magic is happening in [Glob](https://github.com/isaacs/node-glob) and [minimatch](https://github.com/isaacs/minimatch), check them out !

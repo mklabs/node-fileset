@@ -16,7 +16,7 @@
     "node": "*"
   },
   "dependencies": {
-    "miniglob": "https://nodeload.github.com/isaacs/miniglob/tarball/master",
-    "minimatch": "https://nodeload.github.com/mklabs/minimatch/tarball/windows-path-prefixing"
+    "minimatch": "0.1.x",
+    "glob": "3.0.x"
   }
 }
