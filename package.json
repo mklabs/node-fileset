@@ -13,8 +13,8 @@
     "test": "node tests/test.js"
   },
   "dependencies": {
-    "minimatch": "~0.1.5",
-    "glob": "~3.0.1"
+    "minimatch": "0.x",
+    "glob": "3.x"
   },
   "licenses": [{
     "type": "MIT",
