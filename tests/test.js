@@ -27,7 +27,7 @@ test('Say we want the **.js files, but not those in node_modules', function() {
       fileset('**/*.js', 'node_modules/**', function(err, results) {
         if(err) return em.emit('error', err);
         assert.ok(Array.isArray(results), 'should be an array');
-        assert.equal(results.length, 3);
+        assert.equal(results.length, 4);
         em.emit('end');
       });
     },
@@ -36,11 +36,12 @@ test('Say we want the **.js files, but not those in node_modules', function() {
       fileset('**/*.js *.md', 'node_modules/**', function(err, results) {
         if(err) return em.emit('error', err);
         assert.ok(Array.isArray(results), 'should be an array');
-        assert.equal(results.length, 4);
+        assert.equal(results.length, 5);
 
         assert.deepEqual(results, [
           'README.md',
           'lib/fileset.js',
+          'tests/fixtures/an (odd) filename.js',
           'tests/helper.js',
           'tests/test.js'
         ]);
@@ -53,10 +54,11 @@ test('Say we want the **.js files, but not those in node_modules', function() {
       fileset('**/*.js *.md', 'node_modules/** **.md tests/*.js', function(err, results) {
         if(err) return em.emit('error', err);
         assert.ok(Array.isArray(results), 'should be an array');
-        assert.equal(results.length, 1);
+        assert.equal(results.length, 2);
 
         assert.deepEqual(results, [
-          'lib/fileset.js'
+          'lib/fileset.js',
+          'tests/fixtures/an (odd) filename.js',
         ]);
 
         em.emit('end');
@@ -75,7 +77,7 @@ test('Testing out emmited events', function() {
         .on('error', em.emit.bind(em, 'error'))
         .on('end', function(results) {
           assert.ok(Array.isArray(results), 'should be an array');
-          assert.equal(results.length, 3);
+          assert.equal(results.length, 4);
           em.emit('end');
         });
     },
@@ -85,11 +87,12 @@ test('Testing out emmited events', function() {
         .on('error', em.emit.bind(em, 'error'))
         .on('end', function(results) {
           assert.ok(Array.isArray(results), 'should be an array');
-          assert.equal(results.length, 4);
+          assert.equal(results.length, 5);
 
           assert.deepEqual(results, [
             'README.md',
             'lib/fileset.js',
+            'tests/fixtures/an (odd) filename.js',
             'tests/helper.js',
             'tests/test.js'
           ]);
@@ -98,6 +101,29 @@ test('Testing out emmited events', function() {
         });
     }
   }
+});
+
+
+test('Testing patterns passed as arrays', function() {
+
+  return {
+    'Should match files passed as an array with odd filenames': function(em) {
+      fileset(['lib/*.js', 'tests/fixtures/an (odd) filename.js'], ['node_modules/**'])
+        .on('error', em.emit.bind(em, 'error'))
+        .on('end', function(results) {
+          assert.ok(Array.isArray(results), 'should be an array');
+          assert.equal(results.length, 2);
+
+          assert.deepEqual(results, [
+            'lib/fileset.js',
+            'tests/fixtures/an (odd) filename.js',
+          ]);
+
+          em.emit('end');
+        });
+    }
+  }
+
 });
 
 
