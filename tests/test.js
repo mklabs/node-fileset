@@ -13,7 +13,8 @@ test('Given a **.md pattern', function() {
         if(err) return em.emit('error', err);
         assert.ok(Array.isArray(results), 'should be an array');
         assert.ok(results.length, 'should return at least one element');
-        assert.equal(results.length, 1, 'actually, should return only one');
+        console.log('results', results);
+        assert.equal(results.length, 2, 'actually, should return only two');
         em.emit('end');
       });
     }
@@ -36,9 +37,11 @@ test('Say we want the **.js files, but not those in node_modules', function() {
       fileset('**/*.js *.md', 'node_modules/**', function(err, results) {
         if(err) return em.emit('error', err);
         assert.ok(Array.isArray(results), 'should be an array');
-        assert.equal(results.length, 5);
+        console.log('results', results);
+        assert.equal(results.length, 6);
 
         assert.deepEqual(results, [
+          'CHANGELOG.md',
           'README.md',
           'lib/fileset.js',
           'tests/fixtures/an (odd) filename.js',
@@ -87,9 +90,10 @@ test('Testing out emmited events', function() {
         .on('error', em.emit.bind(em, 'error'))
         .on('end', function(results) {
           assert.ok(Array.isArray(results), 'should be an array');
-          assert.equal(results.length, 5);
+          assert.equal(results.length, 6);
 
           assert.deepEqual(results, [
+            'CHANGELOG.md',
             'README.md',
             'lib/fileset.js',
             'tests/fixtures/an (odd) filename.js',
