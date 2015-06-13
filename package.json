@@ -10,7 +10,7 @@
   },
   "main": "./lib/fileset",
   "scripts": {
-    "test": "node tests/test.js"
+    "test": "node tests/test.js && node tests/test-sync.js"
   },
   "dependencies": {
     "minimatch": "0.x",
