@@ -72,6 +72,14 @@ Check out the
 [tests](https://github.com/mklabs/node-fileset/tree/master/tests) for
 more examples.
 
+## Sync usage
+
+```js
+var results = fileset.sync('*.md *.js', 'CHANGELOG.md node_modules/**/*.md node_modules/**/*.js');
+```
+
+The behavior should remain the same, although it lacks the last `options` arguments to pass to internal `glob` and `minimatch` dependencies.
+
 ## Tests
 
 Run `npm test`
