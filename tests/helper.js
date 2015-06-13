@@ -1,7 +1,7 @@
 
-var EventEmitter = require('events').EventEmitter,
-  assert = require('assert'),
-  tests = {};
+var EventEmitter = require('events').EventEmitter;
+var assert       = require('assert');
+var tests        = {};
 
 module.exports = test;
 test.run = run;
@@ -13,16 +13,16 @@ function test(msg, handler) {
 }
 
 function run() {
-  var specs = Object.keys(tests),
-    specsRemaining = specs.length;
+  var specs = Object.keys(tests);
+  var specsRemaining = specs.length;
 
   specs.forEach(function(spec) {
     var handler = tests[spec];
 
     // grab the set of asserts for this spec
-    var shoulds = handler(),
-      keys = Object.keys(shoulds),
-      remaining = keys.length;
+    var shoulds = handler();
+    var keys = Object.keys(shoulds);
+    var remaining = keys.length;
 
     keys.forEach(function(should) {
       var em = new EventEmitter(),
@@ -37,7 +37,7 @@ function run() {
           shoulds[should].status = true;
 
           // till we get to 0
-          if(!(--remaining)) {
+          if (!(--remaining)) {
             console.log([
               '',
               '» ' + spec,
@@ -48,7 +48,7 @@ function run() {
               ''
             ].join('\n'));
 
-            if(!(--specsRemaining)) {
+            if (!(--specsRemaining)) {
               console.log('All done');
             }
 
