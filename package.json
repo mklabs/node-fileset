@@ -2,7 +2,7 @@
   "author": "mklabs",
   "name": "fileset",
   "description": "Wrapper around miniglob / minimatch combo to allow multiple patterns matching and include-exclude ability",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "homepage": "https://github.com/mklabs/node-fileset",
   "repository": {
     "type": "git",
