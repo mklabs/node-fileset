@@ -1,4 +1,4 @@
-# node-fileset
+# node-fileset [![Build Status](https://secure.travis-ci.org/mklabs/node-fileset.png)](http://travis-ci.org/mklabs/node-fileset)
 
 Exposes a basic wrapper on top of
 [Glob](https://github.com/isaacs/node-glob) /
@@ -7,15 +7,13 @@ Exposes a basic wrapper on top of
 usable in Node.js 0.6.x and Windows platforms.
 
 [![NPM](https://nodei.co/npm/fileset.png?downloads=true&stars=true)](https://nodei.co/npm/fileset/)
-[![Build Status](https://secure.travis-ci.org/mklabs/node-fileset.png)](http://travis-ci.org/mklabs/node-fileset)
-
 
 Adds multiples patterns matching and exlude ability. This is
 basically just a sugar API syntax where you can specify a list of includes
 and optional exclude patterns. It works by setting up the necessary
 miniglob "fileset" and filtering out the results using minimatch.
 
-- [Changelog](https://github.com/mklabs/node-fileset/blob/master/CHANGELOG.md#changelog)
+*[Changelog](https://github.com/mklabs/node-fileset/blob/master/CHANGELOG.md#changelog)*
 
 ## Install
 
