@@ -13,6 +13,8 @@ basically just a sugar API syntax where you can specify a list of includes
 and optional exclude patterns. It works by setting up the necessary
 miniglob "fileset" and filtering out the results using minimatch.
 
+- [Changelog](https://github.com/mklabs/node-fileset/blob/master/CHANGELOG.md#changelog)
+
 ## Install
 
     npm install fileset
