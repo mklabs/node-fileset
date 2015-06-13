@@ -6,7 +6,9 @@ Exposes a basic wrapper on top of
 @isaacs. Glob now uses JavaScript instead of C++ bindings which makes it
 usable in Node.js 0.6.x and Windows platforms.
 
+[![NPM](https://nodei.co/npm/fileset.png?downloads=true&stars=true)](https://nodei.co/npm/fileset/)
 [![Build Status](https://secure.travis-ci.org/mklabs/node-fileset.png)](http://travis-ci.org/mklabs/node-fileset)
+
 
 Adds multiples patterns matching and exlude ability. This is
 basically just a sugar API syntax where you can specify a list of includes
