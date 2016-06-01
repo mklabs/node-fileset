@@ -1,6 +1,6 @@
 {
   "name": "fileset",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "Wrapper around miniglob / minimatch combo to allow multiple patterns matching and include-exclude ability",
   "main": "./lib/fileset",
   "scripts": {

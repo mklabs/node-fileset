@@ -1,3 +1,32 @@
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/mklabs/node-fileset/compare/v0.2.1...v1.0.0) (2016-06-01)
+
+
+### Bug Fixes
+
+* update old tests to use mocha instead ([f4e0d8e](https://github.com/mklabs/node-fileset/commit/f4e0d8e))
+
+
+### Features
+
+* **sync:** always ignore node_modules in sync mode ([c6593c0](https://github.com/mklabs/node-fileset/commit/c6593c0))
+* update glob 7 ([954bab5](https://github.com/mklabs/node-fileset/commit/954bab5))
+
+
+### BREAKING CHANGES
+
+* sync: Also includes an update to glob / minimatch. As
+described in 378de99522caf7b665c53472a34a41a0b295b489
+
+> Since glob 6 removes support for comment and negation patterns, this may
+> or may not be a breaking change from fileset's pov.
+
+
+
 ## Changelog
 
 - Releases: https://github.com/mklabs/node-fileset/releases
