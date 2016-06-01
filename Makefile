@@ -13,6 +13,13 @@ eslint:
 fix:
 	eslint . --fix
 
-old-tests:
-	node tests/test.js
-	node tests/test-sync.js
+release: version push publish
+
+version:
+	standard-version -m '%s'
+
+push:
+	git push origin master --tags
+
+publish:
+	npm publish
