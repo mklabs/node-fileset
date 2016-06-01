@@ -19,13 +19,11 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### BREAKING CHANGES
 
-* sync: Also includes an update to glob / minimatch. As
-described in 378de99522caf7b665c53472a34a41a0b295b489
+* Includes an update to glob / minimatch. As described in
+  378de99522caf7b665c53472a34a41a0b295b489
 
 > Since glob 6 removes support for comment and negation patterns, this may
 > or may not be a breaking change from fileset's pov.
-
-
 
 ## Changelog
 
