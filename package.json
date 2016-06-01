@@ -7,7 +7,7 @@
     "test": "bake test"
   },
   "dependencies": {
-    "glob": "^6.0.3",
+    "glob": "^7.0.3",
     "minimatch": "^3.0.0"
   },
   "devDependencies": {
