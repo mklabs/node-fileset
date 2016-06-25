@@ -23,3 +23,5 @@ push:
 
 publish:
 	npm publish
+
+.PHONY: test
