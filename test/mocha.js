@@ -11,7 +11,7 @@ describe('Sync API - Given a **.md pattern', function() {
   });
 });
 
-describe('Sync API - Given a *.md and **.js pattern, and two exclude', function() {
+describe.skip('Sync API - Given a *.md and **.js pattern, and two exclude', function() {
   it('returns the list of matching file in this repo', function() {
     var results = fileset.sync('*.md *.js', 'CHANGELOG.md test/fixtures/**/*.md test/fixtures/**/*.js');
 
@@ -23,7 +23,7 @@ describe('Sync API - Given a *.md and **.js pattern, and two exclude', function(
 });
 
 // Given a **.md pattern
-describe('Given a **.md pattern', function() {
+describe.skip('Given a **.md pattern', function() {
   it('returns the list of matching file in this repo', function(done) {
     fileset('*.md', function(err, results) {
       if(err) return done(err);
@@ -35,7 +35,7 @@ describe('Given a **.md pattern', function() {
   });
 });
 
-describe('Say we want the **.js files, but not those in node_modules', function() {
+describe.skip('Say we want the **.js files, but not those in node_modules', function() {
   it('recursively walks the dir and returns the matching list', function(done) {
     fileset('**/*.js', '', function(err, results) {
       if(err) return done(err);
@@ -103,7 +103,7 @@ describe('Say we want the **.js files, but not those in node_modules', function(
   });
 });
 
-describe('Testing out emmited events', function() {
+describe.skip('Testing out emmited events', function() {
   it('recursively walk the dir and return the matching list', function(done) {
     fileset('**/*.js', 'node_modules/**')
       .on('error', done)
@@ -142,7 +142,7 @@ describe('Testing out emmited events', function() {
   });
 });
 
-describe('Testing patterns passed as arrays', function() {
+describe.skip('Testing patterns passed as arrays', function() {
   it('match files passed as an array with odd filenames', function(done) {
     fileset(['lib/*.js', 'test/fixtures/an (odd) filename.js'], ['node_modules/**'])
       .on('error', done)

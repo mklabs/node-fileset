@@ -5,7 +5,7 @@ help:
 	bake -h
 
 test:
-	mocha -R spec test
+	cd test && ../node_modules/.bin/mocha -R spec .
 
 eslint:
 	eslint .
