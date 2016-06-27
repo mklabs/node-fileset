@@ -44,57 +44,40 @@ describe('Say we want the **.js files, but not those in node_modules', function(
     });
   });
 
-  it.skip('recursively walks the dir and returns the matching list', function(done) {
+  it('recursively walks the dir and returns the matching list', function(done) {
     fileset('**/*.js', function(err, results) {
       if(err) return done(err);
       assert.ok(Array.isArray(results), 'should be an array');
-      assert.equal(results.length, 11);
+      assert.equal(results.length, 2);
       done();
     });
   });
 
-  it.skip('supports multiple paths at once', function(done) {
+  it('supports multiple paths at once', function(done) {
     fileset('**/*.js *.md', 'node_modules/**', function(err, results) {
       if(err) return done(err);
 
       assert.ok(Array.isArray(results), 'should be an array');
-      assert.equal(results.length, 13);
+      assert.equal(results.length, 2);
 
       assert.deepEqual(results, [
-        'CHANGELOG.md',
-        'README.md',
-        'lib/fileset.js',
-        'test/fixtures/an (odd) filename.js',
-        'test/fixtures/glob/common.js',
-        'test/fixtures/glob/glob.js',
-        'test/fixtures/glob/sync.js',
-        'test/fixtures/minimatch/minimatch.js',
-        'test/mocha.js',
-        'tests/fixtures/an (odd) filename.js',
-        'tests/helper.js',
-        'tests/test-sync.js',
-        'tests/test.js'
+        'fixtures/an (odd) filename.js',
+        'mocha.js'
       ]);
 
       done();
     });
   });
 
-  it.skip('Should support multiple paths for excludes as well', function(done) {
+  it('Should support multiple paths for excludes as well', function(done) {
     fileset('**/*.js *.md', 'node_modules/** **.md tests/*.js', function(err, results) {
       if(err) return done(err);
       assert.ok(Array.isArray(results), 'should be an array');
-      assert.equal(results.length, 8);
+      assert.equal(results.length, 2);
 
       assert.deepEqual(results, [
-        'lib/fileset.js',
-        'test/fixtures/an (odd) filename.js',
-        'test/fixtures/glob/common.js',
-        'test/fixtures/glob/glob.js',
-        'test/fixtures/glob/sync.js',
-        'test/fixtures/minimatch/minimatch.js',
-        'test/mocha.js',
-        'tests/fixtures/an (odd) filename.js',
+        'fixtures/an (odd) filename.js',
+        'mocha.js'
       ]);
 
       done();
@@ -102,13 +85,13 @@ describe('Say we want the **.js files, but not those in node_modules', function(
   });
 });
 
-describe.skip('Testing out emmited events', function() {
+describe('Testing out emmited events', function() {
   it('recursively walk the dir and return the matching list', function(done) {
     fileset('**/*.js', 'node_modules/**')
       .on('error', done)
       .on('end', function(results) {
         assert.ok(Array.isArray(results), 'should be an array');
-        assert.equal(results.length, 11);
+        assert.equal(results.length, 2);
         done();
       });
   });
@@ -118,22 +101,11 @@ describe.skip('Testing out emmited events', function() {
       .on('error', done)
       .on('end', function(results) {
         assert.ok(Array.isArray(results), 'should be an array');
-        assert.equal(results.length, 13);
+        assert.equal(results.length, 2);
 
         assert.deepEqual(results, [
-          'CHANGELOG.md',
-          'README.md',
-          'lib/fileset.js',
-          'test/fixtures/an (odd) filename.js',
-          'test/fixtures/glob/common.js',
-          'test/fixtures/glob/glob.js',
-          'test/fixtures/glob/sync.js',
-          'test/fixtures/minimatch/minimatch.js',
-          'test/mocha.js',
-          'tests/fixtures/an (odd) filename.js',
-          'tests/helper.js',
-          'tests/test-sync.js',
-          'tests/test.js'
+          'fixtures/an (odd) filename.js',
+          'mocha.js'
         ]);
 
         done();
@@ -141,16 +113,15 @@ describe.skip('Testing out emmited events', function() {
   });
 });
 
-describe.skip('Testing patterns passed as arrays', function() {
+describe('Testing patterns passed as arrays', function() {
   it('match files passed as an array with odd filenames', function(done) {
-    fileset(['lib/*.js', 'test/fixtures/an (odd) filename.js'], ['node_modules/**'])
+    fileset(['fixtures/*.md', 'fixtures/an (odd) filename.js'], ['*.md'])
       .on('error', done)
       .on('end', function(results) {
         assert.ok(Array.isArray(results), 'should be an array');
-        assert.equal(results.length, 2);
+        assert.equal(results.length, 1);
         assert.deepEqual(results, [
-          'lib/fileset.js',
-          'test/fixtures/an (odd) filename.js',
+          'fixtures/an (odd) filename.js',
         ]);
 
         done();
