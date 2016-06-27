@@ -7,7 +7,7 @@ describe('Sync API - Given a **.md pattern', function() {
     var results = fileset.sync('*.md', 'test/fixtures/**/*.md');
     assert.ok(Array.isArray(results), 'should be an array');
     assert.ok(results.length, 'should return at least one element');
-    assert.equal(results.length, 2, 'actually, should return only two');
+    assert.equal(results.length, 1, 'actually, should return only one');
   });
 });
 
@@ -17,19 +17,18 @@ describe('Sync API - Given a *.md and **.js pattern, and two exclude', function(
 
     assert.ok(Array.isArray(results), 'should be an array');
     assert.ok(results.length, 'should return at least one element');
-
-    assert.equal(results.length, 7, 'actually, should return only 7');
+    assert.equal(results.length, 3, 'actually, should return only 3');
   });
 });
 
 // Given a **.md pattern
 describe('Given a **.md pattern', function() {
   it('returns the list of matching file in this repo', function(done) {
-    fileset('*.md', function(err, results) {
+    fileset('*.js', function(err, results) {
       if(err) return done(err);
       assert.ok(Array.isArray(results), 'should be an array');
       assert.ok(results.length, 'should return at least one element');
-      assert.equal(results.length, 2, 'actually, should return only two');
+      assert.equal(results.length, 1, 'actually, should return only two');
       done();
     });
   });
@@ -40,7 +39,7 @@ describe('Say we want the **.js files, but not those in node_modules', function(
     fileset('**/*.js', '', function(err, results) {
       if(err) return done(err);
       assert.ok(Array.isArray(results), 'should be an array');
-      assert.equal(results.length, 11);
+      assert.equal(results.length, 2);
       done();
     });
   });
@@ -49,7 +48,7 @@ describe('Say we want the **.js files, but not those in node_modules', function(
     fileset('**/*.js', function(err, results) {
       if(err) return done(err);
       assert.ok(Array.isArray(results), 'should be an array');
-      assert.equal(results.length, 11);
+      assert.equal(results.length, 2);
       done();
     });
   });
@@ -59,22 +58,11 @@ describe('Say we want the **.js files, but not those in node_modules', function(
       if(err) return done(err);
 
       assert.ok(Array.isArray(results), 'should be an array');
-      assert.equal(results.length, 13);
+      assert.equal(results.length, 2);
 
       assert.deepEqual(results, [
-        'CHANGELOG.md',
-        'README.md',
-        'lib/fileset.js',
-        'test/fixtures/an (odd) filename.js',
-        'test/fixtures/glob/common.js',
-        'test/fixtures/glob/glob.js',
-        'test/fixtures/glob/sync.js',
-        'test/fixtures/minimatch/minimatch.js',
-        'test/mocha.js',
-        'tests/fixtures/an (odd) filename.js',
-        'tests/helper.js',
-        'tests/test-sync.js',
-        'tests/test.js'
+        'fixtures/an (odd) filename.js',
+        'mocha.js'
       ]);
 
       done();
@@ -85,17 +73,11 @@ describe('Say we want the **.js files, but not those in node_modules', function(
     fileset('**/*.js *.md', 'node_modules/** **.md tests/*.js', function(err, results) {
       if(err) return done(err);
       assert.ok(Array.isArray(results), 'should be an array');
-      assert.equal(results.length, 8);
+      assert.equal(results.length, 2);
 
       assert.deepEqual(results, [
-        'lib/fileset.js',
-        'test/fixtures/an (odd) filename.js',
-        'test/fixtures/glob/common.js',
-        'test/fixtures/glob/glob.js',
-        'test/fixtures/glob/sync.js',
-        'test/fixtures/minimatch/minimatch.js',
-        'test/mocha.js',
-        'tests/fixtures/an (odd) filename.js',
+        'fixtures/an (odd) filename.js',
+        'mocha.js'
       ]);
 
       done();
@@ -109,7 +91,7 @@ describe('Testing out emmited events', function() {
       .on('error', done)
       .on('end', function(results) {
         assert.ok(Array.isArray(results), 'should be an array');
-        assert.equal(results.length, 11);
+        assert.equal(results.length, 2);
         done();
       });
   });
@@ -119,22 +101,11 @@ describe('Testing out emmited events', function() {
       .on('error', done)
       .on('end', function(results) {
         assert.ok(Array.isArray(results), 'should be an array');
-        assert.equal(results.length, 13);
+        assert.equal(results.length, 2);
 
         assert.deepEqual(results, [
-          'CHANGELOG.md',
-          'README.md',
-          'lib/fileset.js',
-          'test/fixtures/an (odd) filename.js',
-          'test/fixtures/glob/common.js',
-          'test/fixtures/glob/glob.js',
-          'test/fixtures/glob/sync.js',
-          'test/fixtures/minimatch/minimatch.js',
-          'test/mocha.js',
-          'tests/fixtures/an (odd) filename.js',
-          'tests/helper.js',
-          'tests/test-sync.js',
-          'tests/test.js'
+          'fixtures/an (odd) filename.js',
+          'mocha.js'
         ]);
 
         done();
@@ -144,14 +115,13 @@ describe('Testing out emmited events', function() {
 
 describe('Testing patterns passed as arrays', function() {
   it('match files passed as an array with odd filenames', function(done) {
-    fileset(['lib/*.js', 'test/fixtures/an (odd) filename.js'], ['node_modules/**'])
+    fileset(['fixtures/*.md', 'fixtures/an (odd) filename.js'], ['*.md'])
       .on('error', done)
       .on('end', function(results) {
         assert.ok(Array.isArray(results), 'should be an array');
-        assert.equal(results.length, 2);
+        assert.equal(results.length, 1);
         assert.deepEqual(results, [
-          'lib/fileset.js',
-          'test/fixtures/an (odd) filename.js',
+          'fixtures/an (odd) filename.js',
         ]);
 
         done();
