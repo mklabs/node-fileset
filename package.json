@@ -21,7 +21,7 @@
     "eslint-plugin-promise": "^3.0.0",
     "eslint-plugin-standard": "^2.0.1",
     "mocha": "^3.1.2",
-    "standard-version": "^3.0.0",
+    "standard-version": "^8.0.1",
     "watchd": "^0.1.1"
   },
   "homepage": "https://github.com/mklabs/node-fileset",
